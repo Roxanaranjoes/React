@@ -11,19 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      - name: Instalar deps
-        run: pnpm install --frozen-lockfile=false
+          cache: 'npm'
+      - name: Instalar deps raíz (para lint)
+        run: npm ci || npm i --no-audit --no-fund
       - name: Lint
-        run: pnpm lint
-      - name: Test
-        run: pnpm test
-      - name: Build
-        run: pnpm build
-
+        run: npx eslint . --ext .ts,.tsx,.js,.mjs,.cjs
+      - name: Instalar y test apps/00-basics
+        working-directory: apps/00-basics
+        run: |
+          npm ci || npm i --no-audit --no-fund
+          npm test --silent
+      - name: Instalar y test packages/ui
+        working-directory: packages/ui
+        run: |
+          npm ci || npm i --no-audit --no-fund
+          npm test --silent
+      - name: Instalar y test packages/utils
+        working-directory: packages/utils
+        run: |
+          npm ci || npm i --no-audit --no-fund
+          npm test --silent
+      - name: Build 00-basics
+        working-directory: apps/00-basics
+        run: npm run build --silent

@@ -11,23 +11,19 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
-      - name: Install
-        run: pnpm install --frozen-lockfile=false
+          cache: 'npm'
+      - name: Install 00-basics
+        working-directory: apps/00-basics
+        run: npm ci || npm i --no-audit --no-fund
       - name: Build 00-basics
-        run: |
-          cd apps/00-basics
-          VITE_BASE_PATH=/React/ pnpm build
+        working-directory: apps/00-basics
+        run: VITE_BASE_PATH=/React/ npm run build --silent
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: apps/00-basics/dist
           force_orphan: true
-
