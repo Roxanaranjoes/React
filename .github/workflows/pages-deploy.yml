@@ -1,0 +1,33 @@
+name: Deploy GitHub Pages (00-basics)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install
+        run: pnpm install --frozen-lockfile=false
+      - name: Build 00-basics
+        run: |
+          cd apps/00-basics
+          VITE_BASE_PATH=/React/ pnpm build
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: apps/00-basics/dist
+          force_orphan: true
+

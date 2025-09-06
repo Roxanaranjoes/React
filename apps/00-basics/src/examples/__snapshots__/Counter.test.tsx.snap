@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Counter > renderiza y snapshot mínimo 1`] = `
+<DocumentFragment>
+  <section>
+    <h2
+      class="mb-2 text-lg font-semibold"
+    >
+      Counter
+    </h2>
+    <div
+      class="flex items-center gap-2"
+    >
+      <button
+        class="rounded bg-blue-600 px-3 py-1 text-white"
+      >
+        -
+      </button>
+      <span
+        aria-live="polite"
+        class="w-12 text-center font-mono"
+      >
+        0
+      </span>
+      <button
+        class="rounded bg-blue-600 px-3 py-1 text-white"
+      >
+        +
+      </button>
+    </div>
+  </section>
+</DocumentFragment>
+`;

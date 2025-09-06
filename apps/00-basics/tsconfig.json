@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@react-lab/ui": ["../../packages/ui"],
+      "@react-lab/utils": ["../../packages/utils/src"]
+    }
+  },
+  "include": ["src", "vite-env.d.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "node_modules", "dist"]
+}
