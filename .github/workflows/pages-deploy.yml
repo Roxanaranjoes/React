@@ -20,10 +20,16 @@ jobs:
         run: npm ci || npm i --no-audit --no-fund
       - name: Build 00-basics
         working-directory: apps/00-basics
-        run: VITE_BASE_PATH=/React/ npm run build --silent
+        run: VITE_BASE_PATH=/${{ github.event.repository.name }}/ npm run build --silent
+      - name: Verificar artefactos
+        run: |
+          test -f apps/00-basics/dist/index.html
+          ls -la apps/00-basics/dist
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: apps/00-basics/dist
           force_orphan: true
+          publish_branch: gh-pages
+          enable_jekyll: false
